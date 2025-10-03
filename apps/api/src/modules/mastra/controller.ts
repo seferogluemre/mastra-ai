@@ -11,23 +11,30 @@ const app = new Elysia({
             tools: mastraService.getAvailableTools(),
         }
     })
-    .post("/execute", async ({ body }) => {
-        try {
+    .post(
+        '/execute',
+        async ({ body, set }) => {
             const { toolName, input } = body;
 
-            const result = await mastraService.executeTool(toolName, input || {})
+            try {
+                const result = await mastraService.executeTool(toolName, input || {});
 
-            return {
-                success: true,
-                result,
-            }
-        } catch (error) {
-            return {
-                success: false,
-                error: new Error((error as Error).message)
+                return {
+                    success: true,
+                    result,
+                };
+            } catch (error) {
+
+                set.status = 400;
+
+                return {
+                    success: false,
+                    error: (error as Error).message || 'Unknown error',
+                    stack: (error as Error).stack,
+                    details: String(error),
+                };
             }
         }
-    }
         , { executeToolBody }
     )
 

@@ -8,7 +8,7 @@ const toolsRegistry = {
 class MastraService {
   async executeTool(toolName: string, input: Record<string, any>) {
     const tool = toolsRegistry[toolName as keyof typeof toolsRegistry];
-    
+
     if (!tool) {
       throw new Error(`Tool '${toolName}' not found. Available tools: ${Object.keys(toolsRegistry).join(', ')}`);
     }
@@ -25,4 +25,4 @@ class MastraService {
   }
 }
 
-export const mastraService=new MastraService();
+export const mastraService = new MastraService();
