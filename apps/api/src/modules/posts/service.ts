@@ -67,10 +67,10 @@ export abstract class PostsService {
     }
   }
 
-  static async show(uuid: string) {
+  static async show(id: number) {
     try {
       const post = await prisma.post.findUnique({
-        where: { uuid },
+        where: { id },
         include: {
           author: {
             select: {
