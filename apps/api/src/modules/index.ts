@@ -5,6 +5,7 @@ import { locationsController } from './locations';
 import { postsController } from './posts';
 import { systemAdministrationController } from './system-administration';
 import { usersController } from './users';
+import { mastraController } from './mastra';
 
 const app = new Elysia()
   .use(systemAdministrationController)
@@ -14,6 +15,7 @@ const app = new Elysia()
   .use(postsController)
   .use(locationsController)
   .use(fileLibraryAssetsController)
+  .use(mastraController)
   .get(
     '/',
     () => ({
@@ -41,6 +43,7 @@ export const swaggerTags: { name: string; description: string }[] = [
   { name: 'City', description: 'City endpoints' },
   { name: 'Region', description: 'Region endpoints' },
   { name: 'Subregion', description: 'Subregion endpoints' },
+  { name: 'Mastra', description: 'Mastra endpoints' },
   { name: 'File Library Assets', description: 'File Library Assets endpoints' },
 ];
 

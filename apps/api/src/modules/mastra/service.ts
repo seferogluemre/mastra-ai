@@ -1,18 +1,28 @@
-import { mastra } from "./index";
+import { getPostsCountTool, getPostByIdTool } from './tools/index';
 
+const toolsRegistry = {
+  getPostsCountTool,
+  getPostByIdTool,
+};
 
-export class MastraService {
-    static async executeTool(toolName: string, input: Record<string, any>) {
-        const tool = mastra.getTool(toolName)
-
-        if (!tool) {
-            throw new Error(`Tool ${toolName} n
-                ot found`)
-        }
-
-        return await tool.execute({ context: input })
+class MastraService {
+  async executeTool(toolName: string, input: Record<string, any>) {
+    const tool = toolsRegistry[toolName as keyof typeof toolsRegistry];
+    
+    if (!tool) {
+      throw new Error(`Tool '${toolName}' not found. Available tools: ${Object.keys(toolsRegistry).join(', ')}`);
     }
 
-    
+    return await tool.execute({ context: input });
+  }
 
+  getAvailableTools() {
+    return Object.keys(toolsRegistry).map(name => ({
+      name,
+      id: toolsRegistry[name as keyof typeof toolsRegistry].id,
+      description: toolsRegistry[name as keyof typeof toolsRegistry].description,
+    }));
+  }
 }
+
+export const mastraService=new MastraService();

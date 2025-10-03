@@ -1,6 +1,7 @@
 import {createTool } from "@mastra/core";
 import prisma from "@onlyjs/db";
 import z from "zod"
+
 export const getPostsCountTool=createTool({
     id:'get-posts-count',
     description:"Returns the total number of posts in the database",
